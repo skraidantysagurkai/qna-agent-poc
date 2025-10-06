@@ -6,8 +6,8 @@ from hamcrest import assert_that, equal_to
 
 from tests.infrastructure.steps import prepare_api_server
 
-if TYPE_CHECKING:
-    from fastapi.testclient import TestClient  # Only imported for type checking
+if TYPE_CHECKING:  # circumvent circular import
+    from fastapi.testclient import TestClient  # Only imported so ruff doesn't complain
 
 
 class TestApiHealth(unittest.TestCase):

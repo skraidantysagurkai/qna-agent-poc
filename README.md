@@ -1,19 +1,49 @@
 # qna-agent-poc
 Python based QnA agent service
 
+## Environment Setup
+**Prerequisites:**
+- Conda, can be installed from [here](https://www.anaconda.com/download)
 
-# Tools:
+Create a conda environment using the provided `requirements.txt` file:
 
-## Scraper:
+**Environment Creation:**
+```bash
+conda create --name qna-agent python=3.12
+conda activate qna-agent
+pip install -r requirements.txt
+```
+
+**Configuration:**
+Create a `.env` file in the root directory by renaming the provided `.env.example` file. Update the environment variables in the `.env` file with your specific configuration details.
+
+## Running the Application
+To start the application, run the following command:
+
+```bash
+python main.py
+```
+This will start the FastAPI server at `http://0.0.0.0:8080`
+
+## Running Tests
+To run the tests, use the following command:
+
+```bash
+python -m unittest discover tests
+```
+
+## Tools:
+
+### Scraper:
 
 You can find the scraper used in this exercise in `tools/scraping/scraper.py`.
 
-### Description
+#### Description
 
 This scraper fetches pages from a sitemap XML, parses the relevant text content from documentation pages, and stores the results as JSON. 
 It is designed to work on small to medium documentation sites and currently runs on **a single thread**, which is sufficient for scraping tasks under 1,000 pages.
 
-### First Things First
+#### First Things First
 
 Before you run the scraper on a website, ensure that you have permission to scrape the site. Check the website's `robots.txt` file and terms of service to confirm that web scraping is allowed. 
 Always respect the website's rules and guidelines. For this and to find the websites sitemap, you can use the created tool in `tools/scraping/reading_robot.py`.
@@ -23,7 +53,7 @@ Launching it via CLI:
 python tools/scraping/reading_robot.py --base_url <website_url>
 ```
 
-### Usage
+#### Usage
 
 The scraper uses the following CLI arguments:
 
