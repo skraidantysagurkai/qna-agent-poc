@@ -7,7 +7,7 @@ from typing import Optional, List
 import requests
 from bs4 import BeautifulSoup
 import time
-from api.logger import get_logger
+from api.shared.logger import get_logger
 from paths import DATA_PATH
 import re
 
