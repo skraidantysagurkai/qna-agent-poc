@@ -1,5 +1,7 @@
 from pathlib import Path
 
-ROOT_PATH = Path(__file__).parent
+ROOT_DIR = Path(__file__).parent
 
-DATA_PATH = ROOT_PATH / "data"
+DATA_DIR = ROOT_DIR / "data"
+
+TEST_DATA_DIR = ROOT_DIR / "tests" / "data"

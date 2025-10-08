@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from api.shared.logger import get_logger
-from paths import DATA_PATH
+from paths import DATA_DIR
 import re
 
 LOGGER = get_logger(__name__)
@@ -17,21 +17,46 @@ LOGGER = get_logger(__name__)
 class TextExtractor:
     def __init__(self) -> None:
         self.class_pattern = re.compile(r"page-width|text-start|page-api-block")
+        self.preserve_url_after_keyword = {"here", "at", "via", "on", "through", "from"}
 
     def extract_text_blocks(self, soup: BeautifulSoup) -> str:
         if not soup:
+            LOGGER.warning("BeautifulSoup object is None or empty")
             return ""
 
-        # Find all <p> tags matching class pattern
         paragraphs = soup.find_all("p", class_=self.class_pattern)
+
+        if not paragraphs:
+            LOGGER.info("No paragraphs found with class pattern. Trying fallback methods...")
+            paragraphs = soup.find_all("p")
+
         text_chunks = []
         for p in paragraphs:
-            # Get text with separator to ensure spaces between elements
-            text = p.get_text(separator=" ", strip=True)  # IDE is delulu
-            if text:
-                text_chunks.append(text)
+            try:
+                for a_tag in p.find_all("a", href=True):
+                    link_text = (a_tag.get_text(strip=True) or "").lower()
+                    prev_text = ""
 
-        return "\n".join(text_chunks)
+                    if a_tag.previous_sibling:
+                        prev_sibling_text = str(a_tag.previous_sibling).strip()
+                        if prev_sibling_text:
+                            prev_text = prev_sibling_text.split()[-1].lower()
+
+                    if prev_text in self.preserve_url_after_keyword or link_text in self.preserve_url_after_keyword:
+                        a_tag.replace_with(f"{a_tag.get_text(strip=True)} ({a_tag['href']})")
+                    else:
+                        a_tag.replace_with(a_tag.get_text(strip=True))
+
+                text = p.get_text(separator=" ", strip=True)  # IDE is delulu
+                if text and len(text.strip()) > 10:
+                    text_chunks.append(text)
+
+            except Exception as e:
+                LOGGER.warning(f"Error processing paragraph: {e}")
+                continue
+
+        result = "\n".join(text_chunks)
+        return result
 
 
 class Scraper:
@@ -116,7 +141,7 @@ class Scraper:
             LOGGER.info(f"Appended batch of {len(batch_data)} items to {output_path}")
 
     def run(self, site_map_url: str, num_sections: int, output_file_name: str) -> None:
-        output_path = DATA_PATH / output_file_name
+        output_path = DATA_DIR / output_file_name
 
         urls = self.fetch_sitemap_urls(site_map_url)
 
