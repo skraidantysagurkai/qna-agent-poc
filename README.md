@@ -49,17 +49,17 @@ Processes natural language questions and returns AI-generated answers with sourc
 **Input Format:**
 ```json
 {
-  "question": "How do I integrate Oxylabs proxies?"
+  "question": "How do I integrate proxies?"
 }
 ```
 
 **Output Format:**
 ```json
 {
-  "answer": "Oxylabs proxies are compatible with many software platforms and tools, from operating systems to browser add-ons. You can integrate them by following the step-by-step integration guides.",
+  "answer": "Some answer",
   "sources": [
-    "https://developers.oxylabs.io/proxies/integration-guides",
-    "https://developers.oxylabs.io/api/documentation"
+    "url1",
+    "url2"
   ]
 }
 ```
@@ -87,6 +87,18 @@ Returns the service health status and version information.
 - `500 Internal Server Error`: Service configuration error
 
 **Base URL:** `http://0.0.0.0:8080` (when running locally)
+
+## Custom Data Format
+
+If you want to use a custom scraped data dataset, please make sure that it is in the format of:
+```json
+[
+  {
+    "url": "https://something.com/some-page",
+    "content": "This is the text content of the page."
+  }
+]
+```
 
 ## Tools:
 
