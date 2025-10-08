@@ -3,15 +3,13 @@ Python based QnA agent service
 
 ## Environment Setup
 **Prerequisites:**
-- Conda, can be installed from [here](https://www.anaconda.com/download)
+- Uv, can be installed from [here](https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
 
 Create a conda environment using the provided `requirements.txt` file:
 
 **Environment Creation:**
 ```bash
-conda create --name qna-agent python=3.12
-conda activate qna-agent
-pip install -r requirements.txt
+uv sync
 ```
 
 **Configuration:**
@@ -21,16 +19,74 @@ Create a `.env` file in the root directory by renaming the provided `.env.exampl
 To start the application, run the following command:
 
 ```bash
-python main.py
+uv run python main.py
 ```
 This will start the FastAPI server at `http://0.0.0.0:8080`
+
+## Running in docker
+To start the application in a docker container, run the following command:
+```bash
+docker-compose up --build
+```
+Note that you need to have docker installed on your machine. For more information, see the [docker documentation](https://docs.docker.com/get-docker/).
 
 ## Running Tests
 To run the tests, use the following command:
 
 ```bash
-python -m unittest discover tests
+uv run python -m unittest discover tests
 ```
+
+## API Endpoints
+
+The application provides the following REST API endpoints:
+
+### Chat Endpoint
+**POST** `/chat/`
+
+Processes natural language questions and returns AI-generated answers with sources.
+
+**Input Format:**
+```json
+{
+  "question": "How do I integrate Oxylabs proxies?"
+}
+```
+
+**Output Format:**
+```json
+{
+  "answer": "Oxylabs proxies are compatible with many software platforms and tools, from operating systems to browser add-ons. You can integrate them by following the step-by-step integration guides.",
+  "sources": [
+    "https://developers.oxylabs.io/proxies/integration-guides",
+    "https://developers.oxylabs.io/api/documentation"
+  ]
+}
+```
+
+**Exceptions:**
+- `400 Bad Request`: Invalid question format or empty question
+- `500 Internal Server Error`: LLM service unavailable or processing error
+
+### Health Check Endpoint
+**GET** `/health/`
+
+Returns the service health status and version information.
+
+**Input Format:** No input required
+
+**Output Format:**
+```json
+{
+  "status": "OK",
+  "version": "0.1.0"
+}
+```
+
+**Exceptions:**
+- `500 Internal Server Error`: Service configuration error
+
+**Base URL:** `http://0.0.0.0:8080` (when running locally)
 
 ## Tools:
 
@@ -50,7 +106,7 @@ Always respect the website's rules and guidelines. For this and to find the webs
 Launching it via CLI:
 
 ```bash
-python tools/scraping/reading_robot.py --base_url <website_url>
+uv run python tools/scraping/reading_robot.py --base_url <website_url>
 ```
 
 #### Usage
@@ -67,7 +123,8 @@ The scraper uses the following CLI arguments:
 And can be run via CLI like this:
 
 ```bash
-python tools/scraping/scraper.py --site_map_url <sitemap_url> --num_sections 2 --output_file_name raw_data.json --batch_size 100
+uv run python tools/scraping/scraper.py --site_map_url <sitemap_url> --num_sections 2 --output_file_name raw_data.json --batch_size 100
 ```
 
 The data will be saved in chunks (of size defined by `--batch_size`) to the `data/` folder.
+`

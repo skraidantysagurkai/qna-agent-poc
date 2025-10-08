@@ -2,3 +2,4 @@
 /data
 /.idea
 /tests/data/persistent_chroma_db/
+/uv.lock

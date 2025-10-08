@@ -1,0 +1,25 @@
+[project]
+name = "qna-agent-poc"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "fastapi>=0.118.1",
+    "fastapi-injector>=0.8.0",
+    "givenpy>=1.0.4",
+    "httptools>=0.6.4",
+    "langchain-chroma>=0.2.6",
+    "langchain-community>=0.3.31",
+    "langchain-openai>=0.3.35",
+    "lxml>=6.0.2",
+    "openapi-client>=1.1.7",
+    "pip>=25.2",
+    "pyhamcrest>=2.1.0",
+    "ruff>=0.14.0",
+    "sentence-transformers>=5.1.1",
+    "watchfiles>=1.1.0",
+    "websockets>=15.0.1",
+    "wheel>=0.45.1",
+]
