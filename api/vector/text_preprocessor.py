@@ -59,7 +59,8 @@ class RawDataPreprocessor:
         if not content:
             return ""
 
-        cleaned = re.sub(r"\n+", "\n", content)
+        cleaned = re.sub(r"[^a-zA-Z0-9.,!?;:\-_/()\"'&%#=~\n ]+", "", content)  # Url safe
+        cleaned = re.sub(r"\n+", "\n", cleaned)
         cleaned = re.sub(r"[^\S\n]+", " ", cleaned)
         cleaned = re.sub(r"\s+([.,!?;:])", r"\1", cleaned)
         cleaned = re.sub(r"([.,!?;:])\1+", r"\1", cleaned)

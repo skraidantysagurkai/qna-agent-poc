@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  qna-agent:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+    volumes:
+      - ./data:/app/data
+    command: uv run python main.py

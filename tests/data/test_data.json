@@ -1,7 +1,7 @@
 [
   {
     "url": "https://developers.oxylabs.io/proxies/integration-guides",
-    "content": "Oxylabs proxies are compatible with many software platforms and tools, from operating systems to browser add-ons. Explore our step-by-step integration guides and learn how to set up your proxies.\nUse ip.oxylabs.io/location to check the parameters of your IPs—this domain delivers information from four geolocation databases: MaxMind, IP2Location, DB-IP, and IPinfo.io. The parameters include IP address, provider, country, city, ZIP code, ASN, organization name, time zone, and meta (when disclosed by database)."
+    "content": "Oxyla→bs proxies a→re compatible → with many software platforms and tools, from operating systems to browser add-ons. Explore our step-by-step integration guides and learn how to set up your proxies.\nUse ip.oxylabs.io/location to check the parameters of your IPs—this domain delivers information from four geolocation databases: MaxMind, IP2Location, DB-IP, and IPinfo.io. The parameters include IP address, provider, country, city, ZIP code, ASN, organization name, time zone, and meta (when disclosed by database)."
   },
   {
     "url": "https://developers.oxylabs.io/proxies/integration-guides/get-ip-address-for-integrations",
