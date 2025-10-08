@@ -2,7 +2,8 @@ import os
 
 from injector import Module, provider, singleton
 
-from paths import ROOT_PATH
+from api.chat.chat_service import ChatService
+from paths import ROOT_DIR
 from api.shared.configs import Configs
 
 
@@ -14,14 +15,19 @@ class AppModule(Module):
     @singleton
     def provide_configs(self) -> Configs:
         if self.build != "test":
-            dotenv_file = ROOT_PATH / ".env"
+            dotenv_file = ROOT_DIR / ".env"
         else:
-            dotenv_file = ROOT_PATH / ".env.test"
+            dotenv_file = ROOT_DIR / ".env.test"
 
         return Configs(
             _env_file=dotenv_file,
             _env_file_encoding="utf-8",
         )
+
+    @provider
+    @singleton
+    def provide_chat_service(self, configs: Configs) -> ChatService:
+        return ChatService(configs=configs)
 
 
 def create_modules():
