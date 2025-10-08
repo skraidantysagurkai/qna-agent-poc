@@ -68,6 +68,8 @@ Processes natural language questions and returns AI-generated answers with sourc
 - `400 Bad Request`: Invalid question format or empty question
 - `500 Internal Server Error`: LLM service unavailable or processing error
 
+**Note:** Queries that do not have a match in the data will return a default message of "I cannot provide an answer to your query.". The choice here was made for the LLM to only output reliably sourced material, thus any and all queries not relevant to the scraped page content will be answered with this default message.
+
 ### Health Check Endpoint
 **GET** `/health/`
 
